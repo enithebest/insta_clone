@@ -3,30 +3,29 @@
     import { slide } from 'svelte/transition';
     import { put } from "@vercel/blob";
 
-
     let { data } = $props();
 </script>
 
 <h1 class="text-center text-4xl font-bold text-gray-900 my-6">Admin Dashboard</h1>
 
-<a href="/admin/events/new" class="block mx-auto w-fit px-6 py-3 bg-blue-600 text-white font-semibold text-lg rounded-lg shadow-md transition hover:bg-blue-700 hover:shadow-lg">
-    Create a New Event
+<a href="/admin/events/new" class="block mx-auto w-fit px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold text-lg rounded-full shadow-lg transition-transform transform hover:scale-105">
+    + Create Event
 </a>
 
-<div class="space-y-6 mt-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6 px-4">
     {#each data.events as event (event.id)}
-    <img src={event.image} alt="">
-        <div class="max-w-xl mx-auto p-5 bg-white border border-gray-300 rounded-lg shadow-sm transition hover:shadow-md" transition:slide>
-            <p class="text-lg font-semibold text-gray-800">
-                {event.title} <span class="text-gray-500 italic">({event.locationName})</span>
-            </p>
-
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform transform hover:scale-105">
+        <img src={event.image} alt="" class="w-full h-56 object-cover">
+        <div class="p-4">
+            <p class="text-lg font-semibold text-gray-900">{event.title}</p>
+            <p class="text-sm text-gray-500 italic">{event.locationName}</p>
             <form action="?/deleteEvent" method="POST" use:enhance class="mt-4">
                 <input type="hidden" name="id" value={event.id} />
-                <button type="submit" class="px-4 py-2 bg-red-600 text-white font-semibold rounded-md transition hover:bg-red-700">
+                <button type="submit" class="w-full py-2 bg-red-500 text-white font-semibold rounded-full transition hover:bg-red-600">
                     Delete
                 </button>
             </form>
         </div>
+    </div>
     {/each}
 </div>
